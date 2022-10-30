@@ -1,16 +1,19 @@
 import memeData from "../memeData";
-
+import { useState } from "react";
 export default function Body() {
+  const [imageURL, setImageURL] = useState("");
+
   const jokes = memeData.data.memes;
   const getJoke = e => {
     e.preventDefault();
+
     const randomNumber = () => {
       return Math.floor(Math.random() * jokes.length);
     };
     const randomJokeURL = () => {
       return jokes[randomNumber()].url;
     };
-    console.log(randomJokeURL());
+    setImageURL(randomJokeURL());
   };
   return (
     <div className="appbody">
@@ -32,7 +35,7 @@ export default function Body() {
         </button>
       </form>
       <div className="meme-final">
-        <img src="" alt="" />
+        <img src={image} alt="" />
       </div>
     </div>
   );
