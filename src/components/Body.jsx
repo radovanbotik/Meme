@@ -1,8 +1,12 @@
 import memeData from "../memeData";
 import { useState } from "react";
 export default function Body() {
-  const [imageURL, setImageURL] = useState("");
-
+  const [meme, setMeme] = useState({
+    topText: "",
+    bottomText: "",
+    randomImage: "http://i.imgflip.com/1bij.jpg",
+  });
+  const [allMemeImages, setAllMemeImages] = useState(memeData.data.memes);
   const jokes = memeData.data.memes;
   const getJoke = e => {
     e.preventDefault();
@@ -10,10 +14,12 @@ export default function Body() {
     const randomNumber = () => {
       return Math.floor(Math.random() * jokes.length);
     };
-    const randomJokeURL = () => {
-      return jokes[randomNumber()].url;
-    };
-    setImageURL(randomJokeURL());
+    // const randomJokeURL = () => {
+    //   return jokes[randomNumber()].url;
+    // };
+    setMeme(prevState => {
+      return { ...prevState, randomImage: allMemeImages[randomNumber()].url };
+    });
   };
   return (
     <div className="appbody">
@@ -35,7 +41,7 @@ export default function Body() {
         </button>
       </form>
       <div className="meme-final">
-        <img src={image} alt="" />
+        <img src={meme.randomImage} alt="" />
       </div>
     </div>
   );
