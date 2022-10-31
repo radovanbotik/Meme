@@ -1,11 +1,19 @@
 import memeData from "../memeData";
 import { useState } from "react";
+import { useEffect } from "react";
+
 export default function Body() {
   const [meme, setMeme] = useState({
     topText: "",
     bottomText: "",
     randomImage: "http://i.imgflip.com/1bij.jpg",
   });
+
+  useEffect(() => {
+    fetch("https://api.imgflip.com/get_memes")
+      .then(resp => resp.json())
+      .then(data => setAllMemeImages(data.data.memes));
+  }, []);
 
   const [lines, setLines] = useState({
     linetop: "",
